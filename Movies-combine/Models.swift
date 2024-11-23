@@ -1,17 +1,11 @@
 //
-//  Models.swift
-//  NetworkCall
+//  ContentView.swift
+//  Movies-combine
 //
-//  Created by Vincent on 27/07/2023.
+//  Created by Salah El Sayed on 23/11/2024.
 //
 
 import Foundation
-
-let jsonDecoder: JSONDecoder = {
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    return decoder
-}()
 
 // MARK: - Movies
 
@@ -88,4 +82,3 @@ struct MovieReviewsResponse: Decodable {
 
 
 
-let apiKey = "da9bc8815fb0fc31d5ef6b3da097a009"
