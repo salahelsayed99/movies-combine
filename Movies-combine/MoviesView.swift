@@ -7,18 +7,64 @@
 
 import SwiftUI
 
+// MARK: - Moview View
+
 struct MoviesView: View {
+    
+    // MARK: - Variables
+    @StateObject var moviesViewModel = MoviesViewModel()
+    
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 6, alignment: .top),
+        GridItem(.flexible(), spacing: 6, alignment: .top),
+    ]
+    
+    // MARK: - Body
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: columns, content: {
+                    ForEach(moviesViewModel.movies) { movie in
+                        MovieCell(movie: movie)
+                    }
+                })
+            }
         }
-        .padding()
+        .searchable(text: $moviesViewModel.searchQuery)
     }
 }
 
 #Preview {
     MoviesView()
+}
+
+// MARK: - moview cell
+
+struct MovieCell: View {
+    
+    // MARK: - Variables
+    var movie: Movie
+    
+    // MARK: - Body
+    var body: some View {
+        VStack(content: {
+            AsyncImage(url: movie.posterURL) { poster in
+                poster
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+            } placeholder: {
+                ProgressView()
+                    .frame(width: 100)
+            }
+            
+            Text(movie.title)
+                .font(.title)
+            Text(movie.overview)
+                .font(.caption2)
+                .lineLimit(3)
+        })
+        .padding(.all, 16)
+    }
 }
