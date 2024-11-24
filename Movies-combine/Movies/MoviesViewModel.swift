@@ -59,7 +59,6 @@ class MoviesViewModel: ObservableObject {
             .switchToLatest() // Cancel previous requests if a new query is made
             .replaceError(with: MovieResponse(results: [])) // Handle errors gracefully
             .map(\.results) // Extract the results array
-            .replaceError(with: [])
             .receive(on: DispatchQueue.main) // Update the UI on the main thread
             .sink { result in
                 switch result {

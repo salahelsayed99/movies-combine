@@ -25,10 +25,15 @@ struct MoviesView: View {
             ScrollView {
                 LazyVGrid(columns: columns, content: {
                     ForEach(moviesViewModel.movies) { movie in
-                        MovieCell(movie: movie)
+                        NavigationLink {
+                            MoviesDetailsView(movie: movie)
+                        } label: {
+                            MovieCell(movie: movie)
+                        }
                     }
                 })
             }
+            .navigationTitle("Movies")
         }
         .searchable(text: $moviesViewModel.searchQuery)
     }
